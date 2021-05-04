@@ -10,7 +10,7 @@ func TestQueueInstantiation(t *testing.T) {
 	q := New(nil)
 	assert.NotNil(t, q)
 	assert.Equal(t, 0, len(q.list))
-	assert.Equal(t, defaultSize, cap(q.list))
+	assert.Equal(t, defaultQueueSize, cap(q.list))
 
 	q = New(&QueueOptions{
 		InitialSize: 20,
@@ -28,7 +28,7 @@ func TestQueuePushAndPop(t *testing.T) {
 		q.Push(i)
 	}
 	assert.Equal(t, 5, len(q.list))
-	assert.Equal(t, defaultSize, cap(q.list))
+	assert.Equal(t, defaultQueueSize, cap(q.list))
 	for i := 0; i < 5; i++ {
 		assert.Equal(t, i+1, q.list[i])
 	}
@@ -63,10 +63,10 @@ func TestQueueClear(t *testing.T) {
 		q.Push(i)
 	}
 	assert.Equal(t, 5, len(q.list))
-	assert.Equal(t, defaultSize, cap(q.list))
+	assert.Equal(t, defaultQueueSize, cap(q.list))
 
 	q.Clear()
 	assert.Equal(t, 0, len(q.list))
-	assert.Equal(t, defaultSize, cap(q.list))
+	assert.Equal(t, defaultQueueSize, cap(q.list))
 	assert.True(t, q.IsEmpty())
 }

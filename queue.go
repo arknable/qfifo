@@ -25,16 +25,18 @@ func (q *Queue) Push(v interface{}) {
 func (q *Queue) Pop() interface{} {
 	q.lock.Lock()
 	defer q.lock.Unlock()
+	return q.unsafePop()
+}
 
+func (q *Queue) unsafePop() interface{} {
 	length := len(q.list)
 	if length == 0 {
 		return nil
 	}
 
-	lastIdx := length - 1
-	v := q.list[lastIdx]
-	q.list[lastIdx] = nil
-	q.list = q.list[:lastIdx]
+	v := q.list[0]
+	q.list[0] = nil
+	q.list = q.list[1:]
 	return v
 }
 
@@ -58,12 +60,12 @@ func (q *Queue) IsEmpty() bool {
 }
 
 // Default slice size
-const defaultSize = 10
+const defaultQueueSize = 10
 
 func New(opts *QueueOptions) *Queue {
 	if opts == nil {
 		opts = &QueueOptions{
-			InitialSize: defaultSize,
+			InitialSize: defaultQueueSize,
 		}
 	}
 	return &Queue{
