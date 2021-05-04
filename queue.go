@@ -29,6 +29,14 @@ func (q *Queue) Pop() interface{} {
 	return v
 }
 
+// Clear removes stored elements
+func (q *Queue) Clear() {
+	for i := range q.list {
+		q.list[i] = nil
+	}
+	q.list = q.list[:0]
+}
+
 // IsEmpty returns true if queue has no element stored, otherwise false.
 func (q *Queue) IsEmpty() bool {
 	return len(q.list) == 0

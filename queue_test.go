@@ -54,3 +54,19 @@ func TestQueuePushAndPop(t *testing.T) {
 	}
 	assert.True(t, isVerified)
 }
+
+func TestQueueClear(t *testing.T) {
+	q := New(nil)
+	assert.NotNil(t, q)
+
+	for i := 1; i <= 5; i++ {
+		q.Push(i)
+	}
+	assert.Equal(t, 5, len(q.list))
+	assert.Equal(t, defaultSize, cap(q.list))
+
+	q.Clear()
+	assert.Equal(t, 0, len(q.list))
+	assert.Equal(t, defaultSize, cap(q.list))
+	assert.True(t, q.IsEmpty())
+}
