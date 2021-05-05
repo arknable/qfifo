@@ -15,7 +15,7 @@ q.Push(2)
 
 Under the hood, `Queue` uses slice with default capacity of 10, to increase the capacity use `QueueOptions`.
 ```
-q = New(&QueueOptions{
+q = qfifo.New(&QueueOptions{
 		InitialSize: 20,
 	})
 q.Push(1)
@@ -30,7 +30,7 @@ To add an element, use `Push()` and to pull an element out use `Pop()`. All meth
 
 To create a publisher:
 ```
-p, err = NewPublisher(PublisherArgs{
+p, err = qfifo.NewPublisher(PublisherArgs{
 		PublishFunc: func(p *Publisher, v interface{}) {
             // v is the pulled element
             fmt.Println(v.(int)) // assuming the queued elements are integers
